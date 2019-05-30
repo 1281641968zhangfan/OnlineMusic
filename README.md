@@ -1,2 +1,4 @@
-# WifiLib
-Android Platform Wifi Settings Lib for Wifi Function
+# OnlineMusic
+
+this is a music player project.
+
