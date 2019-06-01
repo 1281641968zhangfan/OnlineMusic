@@ -72,3 +72,6 @@ fastlane/readme.md
 gradle.properties
 gradlew
 gradlew.bat
+
+# MAC rubbish files
+*.DS_Store

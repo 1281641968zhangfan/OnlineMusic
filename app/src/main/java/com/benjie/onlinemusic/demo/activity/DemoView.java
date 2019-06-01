@@ -1,4 +1,4 @@
-package com.benjie.onlinemusic.demo;
+package com.benjie.onlinemusic.demo.activity;
 
 import com.benjie.onlinemusic.base.view.BaseView;
 

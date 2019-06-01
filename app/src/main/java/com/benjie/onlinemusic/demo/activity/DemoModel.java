@@ -1,4 +1,4 @@
-package com.benjie.onlinemusic.demo;
+package com.benjie.onlinemusic.demo.activity;
 
 import android.os.Handler;
 import android.support.annotation.NonNull;

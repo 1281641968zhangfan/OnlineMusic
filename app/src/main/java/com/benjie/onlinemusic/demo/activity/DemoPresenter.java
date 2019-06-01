@@ -1,4 +1,4 @@
-package com.benjie.onlinemusic.demo;
+package com.benjie.onlinemusic.demo.activity;
 
 import com.benjie.onlinemusic.base.enums.FailedReason;
 import com.benjie.onlinemusic.base.model.DataCallback;

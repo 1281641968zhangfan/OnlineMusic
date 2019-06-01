@@ -1,5 +1,7 @@
-package com.benjie.onlinemusic.demo;
+package com.benjie.onlinemusic.demo.activity;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -7,13 +9,14 @@ import android.widget.TextView;
 import com.benjie.onlinemusic.R;
 import com.benjie.onlinemusic.base.activity.BaseActivity;
 import com.benjie.onlinemusic.base.enums.FailedReason;
+import com.benjie.onlinemusic.demo.fragment.DemoFragment;
 
 /**
  * Created by zhangfan on 2019/6/2.
  */
 public class DemoActivity extends BaseActivity implements DemoView {
 
-    Button mBtn1, mBtn2;
+    Button mBtn1, mBtn2, mBtn3;
     TextView mText1, mText2;
     DemoPresenter mPresenter;
 
@@ -26,6 +29,7 @@ public class DemoActivity extends BaseActivity implements DemoView {
     protected void initViews() {
         mBtn1 = (Button) findViewById(R.id.btn_1);
         mBtn2 = (Button) findViewById(R.id.btn_2);
+        mBtn3 = (Button) findViewById(R.id.btn_3);
         mText1 = (TextView) findViewById(R.id.text_1);
         mText2 = (TextView) findViewById(R.id.text_2);
     }
@@ -44,6 +48,16 @@ public class DemoActivity extends BaseActivity implements DemoView {
             public void onClick(View v) {
                 mText2.setText(null);
                 mPresenter.getData("failure");
+            }
+        });
+        mBtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.container_fragments, new DemoFragment(), "DemoFragment")
+                        .addToBackStack("DemoFragment")
+                        .commitAllowingStateLoss();
             }
         });
     }

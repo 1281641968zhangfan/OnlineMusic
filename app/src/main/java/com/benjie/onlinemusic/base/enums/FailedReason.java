@@ -9,5 +9,7 @@ public enum FailedReason {
 
     REASON_GET_DATA_TIME_OUT,
 
+    REASON_OUT_OF_INDEX,
+
     REASON_UNKNOWN
 }
