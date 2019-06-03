@@ -9,11 +9,31 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+
+        externalNativeBuild {
+
+            ndk {
+                // 打包进APK的ABI类型
+                abiFilters "armeabi-v7a"
+                // abiFilters "armeabi","armeabi-v7a","x86"
+            }
+        }
+
+
+
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            //配置CMakeLists.txt的路径
+            path "CMakeLists.txt"
         }
     }
 }

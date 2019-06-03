@@ -10,6 +10,7 @@ import com.benjie.onlinemusic.R;
 import com.benjie.onlinemusic.base.activity.BaseActivity;
 import com.benjie.onlinemusic.base.enums.FailedReason;
 import com.benjie.onlinemusic.demo.fragment.DemoFragment;
+import com.benjie.onlinemusic.serial_port.SerialPortUtil;
 
 /**
  * Created by zhangfan on 2019/6/2.
@@ -32,6 +33,8 @@ public class DemoActivity extends BaseActivity implements DemoView {
         mBtn3 = (Button) findViewById(R.id.btn_3);
         mText1 = (TextView) findViewById(R.id.text_1);
         mText2 = (TextView) findViewById(R.id.text_2);
+
+        SerialPortUtil.openSerialPort("ttyS1",115200);
     }
 
     @Override
