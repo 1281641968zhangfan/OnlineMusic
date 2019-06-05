@@ -7,12 +7,11 @@ import com.benjie.onlinemusic.base.presenter.BasePresenter;
 /**
  * Created by zhangfan on 2019/6/2.
  */
-public class DemoFramePresenter extends BasePresenter<DemoFrameView> {
+public class DemoFramePresenter extends BasePresenter<DemoFrameView, DemoFrameModel> {
 
-    private DemoFrameModel mModel;
-
-    public DemoFramePresenter() {
-        mModel = new DemoFrameModel();
+    @Override
+    protected DemoFrameModel onCreateModel() {
+        return new DemoFrameModel();
     }
 
     public void getNewUrl() {

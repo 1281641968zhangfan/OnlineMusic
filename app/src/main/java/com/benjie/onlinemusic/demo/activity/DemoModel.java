@@ -1,22 +1,21 @@
 package com.benjie.onlinemusic.demo.activity;
 
-import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.benjie.onlinemusic.base.enums.FailedReason;
+import com.benjie.onlinemusic.base.model.BaseModel;
 import com.benjie.onlinemusic.base.model.DataCallback;
 
 /**
  * Created by zhangfan on 2019/6/2.
  */
-public class DemoModel {
-
-    private Handler mHandler = new Handler();
-
-    public DemoModel() {
-    }
+public class DemoModel extends BaseModel {
 
     public void getData(final String param, @NonNull final DataCallback<String> callback) {
+        if (!isConnect) {
+            // model 未连接，do nothing
+            return;
+        }
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
