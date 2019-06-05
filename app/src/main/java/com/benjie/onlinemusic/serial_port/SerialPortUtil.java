@@ -1,7 +1,8 @@
 package com.benjie.onlinemusic.serial_port;
 
 import android.os.SystemClock;
-import android.util.Log;
+
+import com.benjie.onlinemusic.util.BLog;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,14 +13,11 @@ import java.util.List;
 
 /**
  * Created by Roy_lee on 2019/6/2.
- *
+ * <p>
  * 串口工具类
  */
 
 public class SerialPortUtil {
-
-    private static final String TAG = "Spu  ==> " + SerialPortUtil.class.getSimpleName();
-
 
     private static SerialPort serialPort = null;
     private static InputStream mInputStream = null;
@@ -35,21 +33,17 @@ public class SerialPortUtil {
     private static int readFlag = READING_HEAD_FLAG;
 
 
-
-
-
-
     /**
      * ================================打开串口================================
-     * @param port       串口端口号
-     * @param baudrate   波特率
+     *
+     * @param port     串口端口号
+     * @param baudrate 波特率
      */
 
-    public static void openSerialPort(String port, int baudrate){
-
-        Log.i(TAG,"打开串口");
+    public static void openSerialPort(String port, int baudrate) {
+        BLog.d("openSerialPort::打开串口");
         try {
-            serialPort = new SerialPort(new File("/dev/"+ port), baudrate, 0);
+            serialPort = new SerialPort(new File("/dev/" + port), baudrate, 0);
             // 获取打开的串口中的输入输出流，以便于串口数据的收发
             mInputStream = serialPort.getInputStream();
             mOutputStream = serialPort.getOutputStream();
@@ -68,13 +62,10 @@ public class SerialPortUtil {
     }
 
 
-
-
-
     /**
      * ================================接收串口数据================================
      */
-    public static void receiveSerialPort(){
+    public static void receiveSerialPort() {
 
         new Thread(new Runnable() {
             @Override
@@ -83,7 +74,7 @@ public class SerialPortUtil {
                 while (flag) {
                     try {
 
-                        int dataLen =  mInputStream.available();
+                        int dataLen = mInputStream.available();
                         if (dataLen == 0) {
                             continue;
                         }
@@ -101,33 +92,24 @@ public class SerialPortUtil {
     }
 
 
-
-
-
-
-
-
-
-
-
-
     /**
      * ================================发送串口数据================================
+     *
      * @param cmd 要发送的数据
      */
 
-    private static void sendSerialPort(final byte[] cmd){
+    private static void sendSerialPort(final byte[] cmd) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.i(TAG,"发送串口数据："+ byteTo16String(cmd));
+                BLog.d("sendSerialPort::发送串口数据：" + byteTo16String(cmd));
                 try {
                     mOutputStream.write(cmd);
                     mOutputStream.flush();
 //                    Log.i(TAG,"发送串口数据成功！");
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.i(TAG,"发送串口数据失败！");
+                    BLog.d("发送串口数据失败！");
                 }
             }
         }).start();
@@ -137,11 +119,12 @@ public class SerialPortUtil {
 
     /**
      * ================================发送串口数据================================
+     *
      * @param data 要发送的数据
      */
 
-    public static void sendSerialPort(final String data){
-        Log.i(TAG,"发送串口数据："+ data);
+    public static void sendSerialPort(final String data) {
+        BLog.d("sendSerialPort::发送串口数据：" + data);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -150,11 +133,11 @@ public class SerialPortUtil {
                     byte[] sendData = data.getBytes();
                     mOutputStream.write(sendData);
                     mOutputStream.flush();
-                    Log.i(TAG,"发送串口数据成功！");
+                    BLog.d("sendSerialPort::发送串口数据成功！");
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.i(TAG,"发送串口数据失败！");
+                    BLog.d("sendSerialPort::发送串口数据失败！");
                 }
             }
         }).start();
@@ -162,42 +145,36 @@ public class SerialPortUtil {
     }
 
     /**
-     *================================关闭串口================================
+     * ================================关闭串口================================
      * 关闭串口中的输入输出流
      * 然后将flag的值设为flag，终止接收数据线程
      */
-    public static void closeSerialPort(){
+    public static void closeSerialPort() {
         flag = false;
-        Log.i(TAG,"关闭串口");
+        BLog.d("sendSerialPort::关闭串口");
         try {
             if (serialPort != null) {
                 serialPort.close();
             }
 
-            if(mInputStream != null) {
+            if (mInputStream != null) {
                 mInputStream.close();
             }
 
-            if(mOutputStream != null){
+            if (mOutputStream != null) {
                 mOutputStream.close();
             }
 
-            Log.i(TAG,"串口关闭成功");
+            BLog.d("sendSerialPort::串口关闭成功");
         } catch (IOException e) {
-            Log.i(TAG,"关闭串口失败");
+            BLog.d("sendSerialPort::关闭串口失败");
             e.printStackTrace();
         }
 
     }
 
 
-
-
-
-
-
     //==============================================================================================
-
 
 
     /**
@@ -219,26 +196,26 @@ public class SerialPortUtil {
      */
     public static String byteTo16String(byte b) {
         StringBuffer buffer = new StringBuffer();
-        int aa = (int)b;
-        if (aa<0) {
-            buffer.append(Integer.toString(aa+256, 16)+" ");
-        }else if (aa==0) {
+        int aa = (int) b;
+        if (aa < 0) {
+            buffer.append(Integer.toString(aa + 256, 16) + " ");
+        } else if (aa == 0) {
             buffer.append("00 ");
-        }else if (aa>0 && aa<=15) {
-            buffer.append("0"+ Integer.toString(aa, 16)+" ");
-        }else if (aa>15) {
-            buffer.append(Integer.toString(aa, 16)+" ");
+        } else if (aa > 0 && aa <= 15) {
+            buffer.append("0" + Integer.toString(aa, 16) + " ");
+        } else if (aa > 15) {
+            buffer.append(Integer.toString(aa, 16) + " ");
         }
         return buffer.toString();
     }
 
 
     /**
-     *  计算CRC16校验码
+     * 计算CRC16校验码
      *
      * @param data 需要校验的字符串
      * @return 校验码
-     * */
+     */
     public static String getCRC(String data) {
         data = data.replace(" ", "");
         int len = data.length();
@@ -285,10 +262,8 @@ public class SerialPortUtil {
             result = sb.replace(4 - result.length(), 4, result).toString();
         }
         // 交换高低位
-        return result.substring(2, 4)+ " " + result.substring(0, 2)+ " ";
+        return result.substring(2, 4) + " " + result.substring(0, 2) + " ";
     }
-
-
 
 
 }
